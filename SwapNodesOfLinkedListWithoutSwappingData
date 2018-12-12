@@ -1,0 +1,121 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+struct Node
+{
+    int data;
+    Node *ptr;
+};
+Node *head=NULL;
+Node *tail = NULL;
+void push(int value)
+{
+   Node* new_node = (Node*) malloc(sizeof(Node));
+    new_node->data = value;
+    new_node->ptr = NULL;
+    if(head == NULL)
+        {   tail = new_node;
+            head = new_node;
+        }
+    else
+    {
+     tail->ptr = new_node;
+     tail = new_node;
+    }
+
+
+
+}
+
+void swap(int x,int y)
+{
+    Node *temp=head;
+    Node *s1=NULL;
+    Node *s2=NULL;
+    Node *ps1=NULL;
+    Node *ps2=NULL;
+    while(temp!=NULL)
+    {
+        if(x==temp->data)
+            s1=temp;
+        if(y==temp->data)
+            s2=temp;
+        temp=temp->ptr;
+    }
+    if(s1==NULL || s2 ==NULL)
+    {
+        cout<<"NOT PRESENT";
+        return;
+    }
+    temp=head;
+    Node *t;
+    while(temp!=NULL)
+    {
+
+        if(temp->ptr==s1)
+            ps1=temp;
+        if(temp->ptr==s2)
+            ps2=temp;
+        temp=temp->ptr;
+    }
+    if(ps1==NULL)
+        {
+            //x is head
+            ps2->ptr=s1;
+            t=s1->ptr;
+            s1->ptr=s2->ptr;
+            s2->ptr=t;
+            head=s2;
+            return;
+        }
+    if(ps2==NULL)
+        // y is head
+        {
+            ps1->ptr=s2;
+            t=s1->ptr;
+            s1->ptr=s2->ptr;
+            s2->ptr=t;
+            head=s1;
+            return;
+
+        }
+
+    ps1->ptr=s2;
+    ps2->ptr=s1;
+    t=s1->ptr;
+            s1->ptr=s2->ptr;
+            s2->ptr=t;
+
+
+}
+void printLL()
+{
+    Node *temp;
+    temp=head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" -> ";
+        temp=temp->ptr;
+    }
+}
+int main()
+{
+    push(10);
+    push(20);
+    push(30);
+    push(40);
+    printLL();
+    cout<<endl;
+    swap(30,10);
+    printLL();
+    cout<<endl;
+    swap(20,40);
+    printLL();
+    cout<<endl;
+    swap(10,40);
+    printLL();
+    cout<<endl;
+    swap(30,40);
+    printLL();
+    cout<<endl;
+}
